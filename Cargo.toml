@@ -1,6 +1,6 @@
 [package]
 name = "egui-winit-ash-integration"
-version = "0.1.1"
+version = "0.1.2"
 authors = ["Orito Itsuki <orito.itsuki@gmail.com>"]
 description = "This is the egui integration crate for winit and ash."
 edition = "2018"

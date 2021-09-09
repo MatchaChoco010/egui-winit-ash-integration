@@ -51,7 +51,7 @@
 //! // (5) Call integration.destroy() when drop app.
 //! ```
 //!
-//! [Full example is in examples directory](https://github.com/MatchaChoco010/egui_winit_ash_vk_mem/tree/main/examples/example)
+//! [Full example is in examples directory](https://github.com/MatchaChoco010/egui-winit-ash-integration/tree/main/examples)
 
 mod allocator;
 mod integration;
