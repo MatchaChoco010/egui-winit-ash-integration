@@ -1,10 +1,10 @@
-# egui_winit_ash_integration
+# egui-winit-ash-integration
 
-[![Latest version](https://img.shields.io/crates/v/egui_winit_ash_integration.svg)](https://crates.io/crates/egui_winit_ash_integration)
-[![Documentation](https://docs.rs/egui_winit_ash_integration/badge.svg)](https://docs.rs/egui_winit_ash_integration)
+[![Latest version](https://img.shields.io/crates/v/egui-winit-ash-integration.svg)](https://crates.io/crates/egui-winit-ash-integration)
+[![Documentation](https://docs.rs/egui-winit-ash-integration/badge.svg)](https://docs.rs/egui-winit-ash-integration)
 ![MIT](https://img.shields.io/badge/license-MIT-blue.svg)
 ![Apache](https://img.shields.io/badge/license-Apache-blue.svg)
-[![egui version: 0.14.2](https://img.shields.io/badge/egui%20version-0.14.2-orange)](https://docs.rs/egui/0.10.0/egui/index.html)
+[![egui version: 0.14.2](https://img.shields.io/badge/egui%20version-0.14.2-orange)](https://docs.rs/egui/0.14.2/egui/index.html)
 
 This is the [egui](https://github.com/emilk/egui) integration crate for [winit](https://github.com/rust-windowing/winit) and [ash](https://github.com/MaikKlein/ash).
 The default GPU allocator is [gpu_allocator](https://github.com/Traverse-Research/gpu-allocator), but you can also implement AllocatorTrait.
