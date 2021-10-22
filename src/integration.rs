@@ -798,7 +798,7 @@ impl<A: AllocatorTrait> Integration<A> {
     }
 
     /// end frame.
-    pub fn end_frame(&mut self, window: &mut Window) -> (egui::Output, Vec<ClippedShape>) {
+    pub fn end_frame(&mut self, window: &Window) -> (egui::Output, Vec<ClippedShape>) {
         let (output, clipped_shapes) = self.context.end_frame();
 
         // handle links
@@ -840,9 +840,11 @@ impl<A: AllocatorTrait> Integration<A> {
     pub fn paint(
         &mut self,
         command_buffer: vk::CommandBuffer,
-        index: usize,
+        swapchain_image_index: usize,
         clipped_meshes: Vec<egui::ClippedMesh>,
     ) {
+        let index = swapchain_image_index;
+
         // update time
         if let Some(time) = self.start_time {
             self.raw_input.time = Some(time.elapsed().as_secs_f64());
