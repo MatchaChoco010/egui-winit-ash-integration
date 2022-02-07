@@ -15,7 +15,6 @@ use ash_window::{create_surface, enumerate_required_extensions};
 use cgmath::{Deg, Matrix4, Point3, Vector3};
 use crevice::std140::{AsStd140, Std140};
 use gpu_allocator::vulkan::*;
-use image::GenericImageView;
 use memoffset::offset_of;
 #[cfg(debug_assertions)]
 use vk::DebugUtilsMessengerEXT;
@@ -219,7 +218,7 @@ impl App {
             .build(event_loop)?;
 
         // Create Entry
-        let entry = unsafe { Entry::new()? };
+        let entry = Entry::linked();
 
         // Create Instance
         let instance = {
@@ -1729,7 +1728,7 @@ impl App {
                 ui.checkbox(&mut self.show_scene_window, "Scene Window");
                 ui.horizontal(|ui| {
                     ui.label("Scene Clear Color");
-                    let mut hsva = egui::color::Hsva::from_rgba_premultiplied(self.clear_color);
+                    let mut hsva = egui::color::Hsva::from_rgba_premultiplied(self.clear_color[0], self.clear_color[1], self.clear_color[2], self.clear_color[3]);
                     egui::color_picker::color_edit_button_hsva(
                         ui,
                         &mut hsva,
@@ -1743,7 +1742,7 @@ impl App {
                 let image_texture_id = self.image_texture_id;
                 egui::Window::new("User Texture Window")
                     .resizable(true)
-                    .scroll(true)
+                    .scroll2([true, true])
                     .open(show_user_texture_window)
                     .show(&self.egui_integration.context(), |ui| {
                         ui.image(image_texture_id, [256.0, 256.0]);
@@ -1758,7 +1757,7 @@ impl App {
                 let rotation_y = &mut self.rotation_y;
                 egui::Window::new("Scene Window")
                     .resizable(true)
-                    .scroll(true)
+                    .scroll2([true, true])
                     .open(show_scene_window)
                     .show(&self.egui_integration.context(), |ui| {
                         {
@@ -1770,7 +1769,7 @@ impl App {
                                 ui.allocate_exact_size(desired_size, Sense::drag());
 
                             let mut mesh =
-                                paint::Mesh::with_texture(scene_texture_ids[current_frame]);
+                                epaint::Mesh::with_texture(scene_texture_ids[current_frame]);
                             mesh.add_rect_with_uv(
                                 rect,
                                 Rect::from_min_max(pos2(0.0, 0.0), pos2(1.0, 1.0)),

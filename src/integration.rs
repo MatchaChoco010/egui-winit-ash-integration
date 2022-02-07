@@ -8,8 +8,8 @@ use ash::{extensions::khr::Swapchain, vk, Device};
 use bytemuck::bytes_of;
 use copypasta::{ClipboardContext, ClipboardProvider};
 use egui::{
-    math::{pos2, vec2},
-    paint::ClippedShape,
+    emath::{pos2, vec2},
+    epaint::ClippedShape,
     CtxRef, Key,
 };
 use winit::event::{Event, ModifiersState, VirtualKeyCode, WindowEvent};
@@ -609,10 +609,10 @@ impl<A: AllocatorTrait> Integration<A> {
                 WindowEvent::MouseWheel { delta, .. } => match delta {
                     winit::event::MouseScrollDelta::LineDelta(x, y) => {
                         let line_height = 24.0;
-                        self.raw_input.scroll_delta = vec2(*x, *y) * line_height;
+                        self.raw_input.events.push(egui::Event::Scroll(vec2(*x, *y) * line_height));
                     }
                     winit::event::MouseScrollDelta::PixelDelta(delta) => {
-                        self.raw_input.scroll_delta = vec2(delta.x as f32, delta.y as f32);
+                        self.raw_input.events.push(egui::Event::Scroll(vec2(delta.x as f32, delta.y as f32)));
                     }
                 },
                 // mouse move
@@ -853,7 +853,7 @@ impl<A: AllocatorTrait> Integration<A> {
         }
 
         // update font texture
-        self.upload_font_texture(command_buffer, &self.context.fonts().texture());
+        self.upload_font_texture(command_buffer, &self.context.fonts().font_image());
 
         let mut vertex_buffer_ptr = self.vertex_buffer_allocations[index]
             .mapped_ptr()
@@ -1080,7 +1080,7 @@ impl<A: AllocatorTrait> Integration<A> {
         }
     }
 
-    fn upload_font_texture(&mut self, command_buffer: vk::CommandBuffer, texture: &egui::Texture) {
+    fn upload_font_texture(&mut self, command_buffer: vk::CommandBuffer, texture: &egui::FontImage) {
         debug_assert_eq!(texture.pixels.len(), texture.width * texture.height);
 
         // check version
