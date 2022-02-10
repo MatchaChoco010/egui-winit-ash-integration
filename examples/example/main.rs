@@ -207,7 +207,7 @@ impl App {
             .build(event_loop)?;
 
         // Create Entry
-        let entry = unsafe { Entry::new() }?;
+        let entry = Entry::linked();
 
         // Create Instance
         let instance = {
@@ -1362,7 +1362,7 @@ impl App {
             });
             egui::Window::new("My Window")
                 .resizable(true)
-                .scroll(true)
+                .scroll2([true, true])
                 .show(&self.egui_integration.context(), |ui| {
                     ui.heading("Hello");
                     ui.label("Hello egui!");
